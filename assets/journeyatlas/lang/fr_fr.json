@@ -1,0 +1,10 @@
+{
+ "key.journeyatlas.map_toggle": "Carte plein écran",
+ "key.journeyatlas.create_waypoint": "Créer une balise",
+ "key.journeyatlas.zoom_in": "Zoomer",
+ "key.journeyatlas.zoom_out": "Dézoomer",
+ "key.journeyatlas.minimap_type": "Changer le type de carte",
+ "key.journeyatlas.minimap_preset": "Changer de preset de mini-carte",
+ "key.journeyatlas.minimap_toggle": "Afficher / masquer la mini-carte",
+ "key.categories.journeyatlas": "JourneyAtlas"
+}

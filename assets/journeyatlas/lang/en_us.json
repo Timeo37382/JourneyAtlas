@@ -1,0 +1,10 @@
+{
+ "key.journeyatlas.map_toggle": "Fullscreen Map",
+ "key.journeyatlas.create_waypoint": "Create Waypoint",
+ "key.journeyatlas.zoom_in": "Zoom In",
+ "key.journeyatlas.zoom_out": "Zoom Out",
+ "key.journeyatlas.minimap_type": "Change Map Type",
+ "key.journeyatlas.minimap_preset": "Switch MiniMap Preset",
+ "key.journeyatlas.minimap_toggle": "Show / Hide MiniMap",
+ "key.categories.journeyatlas": "JourneyAtlas"
+}

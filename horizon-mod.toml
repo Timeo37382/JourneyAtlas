@@ -1,0 +1,99 @@
+id = "journeyatlas"
+name = "JourneyAtlas"
+version = "0.1.0"
+description = "Minimap, fullscreen map with day, night, topographic and cave views, waypoints with beacons, mob heads and an entity radar."
+authors = ["Timeo37382"]
+homepage = "https://github.com/Timeo37382/JourneyAtlas"
+issues = "https://github.com/Timeo37382/JourneyAtlas/issues"
+license = "All Rights Reserved"
+api = "0.2"
+side = "client"
+capabilities = ["registries"]
+
+[native]
+game = "26.3"
+horizon = "f1bb66f353cf67f2aa4665293fc75c8d91186fc7"
+mixins = "e59da9094f0c2fdda6c627fe9eff22dec6a906f0"
+
+[[native.module]]
+id = "bridge"
+file = "crates/horizon-client/src/game.rs"
+name = "journeyatlas_bridge"
+source = "src/bridge.rs"
+
+[[native.mixin]]
+id = "jm-frame"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::render_frame_pre::Game::native_render_frame_pre"
+helper = "src/mixins/frame.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }]
+
+[[native.mixin]]
+id = "jm-hud"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::render_gui_post::Game::native_render_gui_post"
+helper = "src/mixins/hud.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "batch", ty = "&mut horizon_client::hud::HudBatch", value = "draw" }]
+
+[[native.mixin]]
+id = "jm-screen"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::base::Game::native_screen_render_post"
+helper = "src/mixins/screen.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "batch", ty = "&mut horizon_client::hud::HudBatch", value = "draw" }]
+
+[[native.mixin]]
+id = "jm-press"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::base::Game::native_screen_mouse_button_pressed_pre"
+helper = "src/mixins/press.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "button", ty = "i32", value = "button" }, { name = "canceled", ty = "&mut bool", value = "canceled" }]
+
+[[native.mixin]]
+id = "jm-release"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::base::Game::native_screen_mouse_button_released_pre"
+helper = "src/mixins/release.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "canceled", ty = "&mut bool", value = "canceled" }]
+
+[[native.mixin]]
+id = "jm-drag"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::base::Game::native_screen_mouse_dragged_pre"
+helper = "src/mixins/drag.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "delta", ty = "[f32; 2]", value = "delta" }, { name = "button", ty = "i32", value = "button" }, { name = "canceled", ty = "&mut bool", value = "canceled" }]
+
+[[native.mixin]]
+id = "jm-scroll"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::base::Game::native_screen_mouse_scrolled_pre"
+helper = "src/mixins/scroll.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "scroll", ty = "[f64; 2]", value = "scroll" }, { name = "canceled", ty = "&mut bool", value = "canceled" }]
+
+[[native.mixin]]
+id = "jm-screen-key"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::base::Game::native_screen_key_pressed_pre"
+helper = "src/mixins/screen_key.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "key", ty = "&str", value = "key" }, { name = "canceled", ty = "&mut bool", value = "canceled" }]
+
+[[native.mixin]]
+id = "jm-screen-char"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::base::Game::native_screen_char_typed_pre"
+helper = "src/mixins/screen_char.rs"
+bindings = [{ name = "game", ty = "&crate::game::Game<'_>", value = "self" }, { name = "c", ty = "char", value = "c" }, { name = "canceled", ty = "&mut bool", value = "canceled" }]
+
+[[native.mixin]]
+id = "jm-key"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::input_key::Game::native_input_key"
+helper = "src/mixins/key.rs"
+bindings = [{ name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" }, { name = "key", ty = "&str", value = "key" }, { name = "action", ty = "mod_api::KeyAction", value = "action" }, { name = "modifiers", ty = "u32", value = "modifiers" }]
+
+[[native.mixin]]
+id = "jm-disconnect"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::client_services::Game::native_client_disconnecting"
+helper = "src/mixins/disconnect.rs"
+bindings = []
